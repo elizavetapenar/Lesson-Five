@@ -1,0 +1,148 @@
+//1. Создать протокол «Car» и описать свойства, общие для автомобилей, а также метод действия.
+//
+//2. Создать расширения для протокола «Car» и реализовать в них методы конкретных действий с автомобилем: открыть/закрыть окно, запустить/заглушить двигатель и т.д. (по одному методу на действие, реализовывать следует только те действия, реализация которых общая для всех автомобилей).
+//
+//3. Создать два класса, имплементирующих протокол «Car» - trunkCar и sportСar. Описать в них свойства, отличающиеся для спортивного автомобиля и цистерны.
+//
+//4. Для каждого класса написать расширение, имплементирующее протокол CustomStringConvertible.
+//
+//5. Создать несколько объектов каждого класса. Применить к ним различные действия.
+//
+//6. Вывести сами объекты в консоль.
+
+import UIKit
+import Foundation
+
+protocol Car {
+    var color: UIColor { get set }
+    var brend: String { get set }
+    var year: Int { get set }
+    var kmh: Double { get set }
+    var window: Bool { get set }
+    var engine: Bool { get set }
+    
+    func speed () -> Double
+}
+
+extension Car {
+    func windowPosotion() {
+        if window == true {
+            print ("Окно уже открыто")
+        } else {
+             print ("Окно уже закрыто")
+        }
+    }
+}
+
+extension Car {
+    func enginePower() {
+        if engine == true {
+            print("Двигатель уже включен")
+        } else {
+            print("Двигатель уже выключен")
+        }
+    }
+}
+
+class TrunkCar: Car {
+    var color: UIColor
+    var brend: String
+    var year: Int
+    var kmh: Double
+    var window: Bool
+    var engine: Bool
+    
+    let refrigeratedBox: String
+    let wheels: Int
+    
+    func speed() -> Double {
+        if kmh < 50 {
+            kmh += 10
+            print ("Скорость автомобиля \(kmh) км/ч.")
+        } else {
+            kmh -= 10
+            print ("Скорость автомобиля \(kmh) км/ч.")
+        }
+        return kmh
+    }
+        
+    init(color: UIColor, brend: String, year: Int, kmh: Double, window: Bool, engine: Bool, refrigeratedBox: String, wheels: Int) {
+        self.color = color
+        self.brend = brend
+        self.year = year
+        self.kmh = kmh
+        self.window = window
+        self.engine = engine
+        self.refrigeratedBox = refrigeratedBox
+        self.wheels = wheels
+    }
+}
+
+class SportCar: Car {
+    var color: UIColor
+    var brend: String
+    var year: Int
+    var kmh: Double
+    var window: Bool
+    var engine: Bool
+    
+    let bluetooth: String
+    let overclocking: Double
+    
+    func speed() -> Double {
+        if kmh < 100 {
+            kmh += 20
+            print("Скорость автомобиля \(kmh) км/ч.")
+        } else {
+            kmh -= 20
+            print("Скорость автомобиля \(kmh) км/ч.")
+        }
+        return kmh
+    }
+    
+    init(color: UIColor, brend: String, year: Int, kmh: Double, window: Bool, engine: Bool, bluetooth: String, overclocking: Double) {
+        self.color = color
+        self.brend = brend
+        self.year = year
+        self.kmh = kmh
+        self.window = window
+        self.engine = engine
+        self.bluetooth = bluetooth
+        self.overclocking = overclocking
+    }
+}
+
+extension TrunkCar: CustomStringConvertible {
+    var description: String {
+        return "Грузовой автомобиль"
+    }
+}
+
+extension SportCar: CustomStringConvertible {
+    var description: String {
+        return "Спортивный автомобиль"
+    }
+}
+
+var trunkCar1 = TrunkCar(color: .blue, brend: "MAN", year: 2010, kmh: 20, window: false, engine: true, refrigeratedBox: "Есть", wheels: 10)
+print(trunkCar1.description)
+print(trunkCar1.color)
+print(trunkCar1.brend)
+print(trunkCar1.year)
+trunkCar1.speed()
+trunkCar1.windowPosotion()
+trunkCar1.enginePower()
+print(trunkCar1.refrigeratedBox)
+print(trunkCar1.wheels)
+
+
+var sportCar1 = SportCar(color: .brown, brend: "Mersedes", year: 2020, kmh: 100, window: true, engine: false, bluetooth: "Есть", overclocking: 8)
+print(sportCar1.description)
+print(sportCar1.color)
+print(sportCar1.brend)
+print(sportCar1.year)
+sportCar1.speed()
+sportCar1.windowPosotion()
+sportCar1.enginePower()
+print(sportCar1.bluetooth)
+print(sportCar1.overclocking)
